@@ -1,16 +1,28 @@
 package adv.brand.com.lavanya;
 
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import adv.brand.com.lavanya.fragments.OfferFragment;
 import adv.brand.com.lavanya.fragments.PageBaseFragment;
@@ -25,17 +37,22 @@ public class MainActivity extends AppCompatActivity {
 
     ViewPagerAdapter adapter;
 
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
         viewPager=(ViewPager)findViewById(R.id.viewPager);
-        getSetData();
+        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        viewPager.setVisibility(View.GONE);
+        new GetStringFromUrl().execute("https://drive.google.com/uc?export=download&id=0B9o93WyRkCCSSVlyZmZIdlpla2c");
+//        getSetData();
     }
 
-    public void getSetData()
+    public void getSetData(String data)
     {
-        String data="{\"offers\":[{\"title\":\"50% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://drive.google.com/open?id=0B9o93WyRkCCSSngxNGZJYnBFeFE\"},{\"title\":\"75% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://drive.google.com/open?id=0B9o93WyRkCCSTjRMZl9rOGdIWlE\"},{\"title\":\"80% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://drive.google.com/open?id=0B9o93WyRkCCSZFBWWmxFemtJWlk\"},{\"title\":\"14% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://drive.google.com/open?id=0B9o93WyRkCCSeUd4MXFIdU15VTA\"},{\"title\":\"78% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://drive.google.com/open?id=0B9o93WyRkCCSU0xOV3R0WkR1NUk\"}]}";
+//        String data="{\"offers\":[{\"title\":\"50% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://www.dropbox.com/s/qhodqgkf1okdbye/1002.jpg?dl=1\"},{\"title\":\"75% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://www.dropbox.com/s/9pzumm4d8yipbz3/1001.jpg?dl=1\"},{\"title\":\"80% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://www.dropbox.com/s/lff6wia3lsccqf0/1005.jpg?dl=1\"},{\"title\":\"14% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://www.dropbox.com/s/zpek8tjalxar9i4/1004.jpg?dl=1\"},{\"title\":\"78% Off\",\"desc\":\"dsdsdsdsd dssbsn kadknac lkkac kndsadk kdnakdnadk lnasdsnnda kasdnkdsnasa\",\"redirect\":\"http://jsonparseronline.com/\",\"imgUrl\":\"https://www.dropbox.com/s/nhd7a556xeflhbc/1003.jpg?dl=1\"}]}";
 
         Gson gson= new Gson();
 
@@ -68,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             adapter.setList(fragments);
             viewPager.setAdapter(adapter);
         }
-
 
     }
 
@@ -141,6 +157,62 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentList.get(position).title;
+        }
+    }
+
+
+    private class GetStringFromUrl extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // show progress dialog when downloading
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result=null;
+
+            try {
+                // Create a URL for the desired page
+                URL url = new URL(params[0]); //My text file location
+                //First open the connection
+                HttpsURLConnection conn=(HttpsURLConnection) url.openConnection();
+                conn.setConnectTimeout(60000); // timing out in a minute
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                //t=(TextView)findViewById(R.id.TextView1); // ideally do this in onCreate()
+                StringBuffer buffer = new StringBuffer();
+                String str;
+                while ((str = in.readLine()) != null) {
+                    buffer.append(str);
+                }
+                in.close();
+
+                result=buffer.toString();
+                Log.d("MyTag","Result::"+result);
+
+            } catch (Exception e) {
+                Log.d("MyTag",e.toString());
+            }
+            return result;}
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            // TODO change text view id for yourself
+            if(!TextUtils.isEmpty(result))
+            {
+                viewPager.setVisibility(View.VISIBLE);
+                getSetData(result);
+            }
+          progressBar.setVisibility(View.GONE);
         }
     }
 }

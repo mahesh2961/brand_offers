@@ -1,6 +1,12 @@
 package adv.brand.com.lavanya.fragments;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -11,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -20,6 +27,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import adv.brand.com.lavanya.BrandApp;
 import adv.brand.com.lavanya.R;
 import adv.brand.com.lavanya.customUI.CustomFontTextView;
+import adv.brand.com.lavanya.customUI.CustomImageView;
 import adv.brand.com.lavanya.utils.CustomVolleyRequestQueue;
 
 /**
@@ -34,7 +42,7 @@ public class OfferFragment extends PageBaseFragment {
     String title;
     String desc;
 
-    NetworkImageView brandImg;
+    CustomImageView brandImg;
     CustomFontTextView txtTitle,txtdesc;
 
     private ImageLoader mImageLoader;
@@ -70,38 +78,24 @@ public class OfferFragment extends PageBaseFragment {
 
         }
 
+/*
         imageUrl="https://www.dropbox.com/s/9pzumm4d8yipbz3/1001.jpg?dl=1";
-        brandImg=(NetworkImageView)view.findViewById(R.id.offerImage);
+*/
+        brandImg=(CustomImageView)view.findViewById(R.id.offerImage);
         txtTitle=(CustomFontTextView)view.findViewById(R.id.offerTitle);
         txtdesc=(CustomFontTextView)view.findViewById(R.id.offerDescription);
 
         txtTitle.setText(title);
         txtdesc.setText(desc);
 
-        /*com.nostra13.universalimageloader.core.ImageLoader.getInstance().loadImage(imageUrl,new ImageLoadingListener(){
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                Log.e("tag", "onLoadingStarted");
-            }
 
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                Log.e("tag", "onLoadingFailed failReason::"+failReason.getCause());
-            }
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                Log.e("tag", "onLoadingComplete");
-                brandImg.setImageBitmap(loadedImage);
-            }
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                Log.e("tag", "onLoadingCancelled");
-            }
-        });*/
-        mImageLoader.get(imageUrl, ImageLoader.getImageListener(brandImg, R.drawable.home_stub, android.R.drawable.ic_dialog_alert));
-        brandImg.setImageUrl(imageUrl, mImageLoader);
+       mImageLoader.get(imageUrl, ImageLoader.getImageListener(brandImg, R.drawable.home_stub, android.R.drawable.ic_dialog_alert));
+       brandImg.setImageUrl(imageUrl, mImageLoader);
 
 
 
     }
+
+
+
 }

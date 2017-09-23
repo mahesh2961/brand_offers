@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="image_width">400dp</dimen>
-    <dimen name="image_height">500dp</dimen>
+    <dimen name="image_height">350dp</dimen>
+    <dimen name="action_bar_height">60dp</dimen>
+    <dimen name="action_bar_tittle_size">16dp</dimen>
+
+
 
 </resources>

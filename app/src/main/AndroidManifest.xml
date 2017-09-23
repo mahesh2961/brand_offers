@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:name=".BrandApp"
         android:theme="@style/AppTheme">
-        <activity android:name="adv.brand.com.lavanya.MainActivity">
+        <activity android:name="adv.brand.com.lavanya.MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

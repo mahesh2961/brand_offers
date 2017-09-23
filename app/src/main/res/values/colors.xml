@@ -85,5 +85,7 @@
     <color name="sub_cat_black">#26000000</color>
     <color name="chip_bg_color">#33000000</color>
     <color name="subtext_color">#66000000</color>
+    <color name="brand_text_color">#B3000000</color>
+
 
 </resources>
