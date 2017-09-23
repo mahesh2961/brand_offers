@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    tools:context="adv.brand.com.lavanya.MainActivity">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_margin="16dp"
+       android:layout_height="match_parent">
+
+       <com.android.volley.toolbox.NetworkImageView
+           android:id="@+id/offerImage"
+           android:layout_alignParentTop="true"
+           android:src="@drawable/home_stub"
+           android:scaleType="fitXY"
+           android:layout_marginBottom="10dp"
+           android:layout_centerHorizontal="true"
+           android:layout_width="@dimen/image_width"
+           android:layout_height="@dimen/image_height" />
+
+       <!--<ImageView
+           android:id="@+id/offerImage"
+           android:layout_alignParentTop="true"
+           android:src="@drawable/home_stub"
+           android:layout_centerHorizontal="true"
+           android:layout_marginBottom="16dp"
+           android:layout_width="@dimen/image_width"
+           android:layout_height="@dimen/image_height" />-->
+
+       <adv.brand.com.lavanya.customUI.CustomFontTextView
+           android:id="@+id/offerTitle"
+           android:text="Title Placeholder"
+           android:textColor="@color/black_alpha_70"
+           android:layout_below="@+id/offerImage"
+           android:textSize="24dp"
+           android:layout_marginBottom="10dp"
+           custom:fontName="@string/font_medium"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+
+
+
+       <adv.brand.com.lavanya.customUI.CustomFontTextView
+           android:id="@+id/offerDescription"
+           android:text="dasdasdsadsad saddsadasdas sadsadasd sadsadsad  sadsads adsad  sadadsa saddas d asdasd dasdsad asdsa dasdas dsad sdas "
+           android:textColor="@color/black_alpha_50"
+           android:layout_below="@+id/offerTitle"
+           android:textSize="15dp"
+           android:layout_marginBottom="20dp"
+           custom:fontName="@string/font_light"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+
+   </RelativeLayout>
+
+
+
+</ScrollView>

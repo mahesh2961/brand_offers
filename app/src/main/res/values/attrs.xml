@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ViewPagerIndicator">
+
+        <!-- Style of the circle indicator. -->
+        <attr name="vpiCirclePageIndicatorStyle" format="reference" />
+        <!-- Style of the icon indicator's views. -->
+        <attr name="vpiIconPageIndicatorStyle" format="reference" />
+        <!-- Style of the line indicator. -->
+        <attr name="vpiLinePageIndicatorStyle" format="reference" />
+        <!-- Style of the title indicator. -->
+        <attr name="vpiTitlePageIndicatorStyle" format="reference" />
+        <!-- Style of the tab indicator's tabs. -->
+        <attr name="vpiTabPageIndicatorStyle" format="reference" />
+        <!-- Style of the underline indicator. -->
+        <attr name="vpiUnderlinePageIndicatorStyle" format="reference" />
+    </declare-styleable>
+    
+
+    <attr name="centered" format="boolean" />
+    <attr name="selectedColor" format="color" />
+    <attr name="strokeWidth" format="dimension" />
+    <attr name="unselectedColor" format="color" />
+
+    <declare-styleable name="CirclePageIndicator">
+
+        <!-- Whether or not the indicators should be centered. -->
+        <attr name="centered" />
+        <!-- Color of the filled circle that represents the current page. -->
+        <attr name="fillColor" format="color" />
+        <!-- Color of the filled circles that represents pages. -->
+        <attr name="pageColor" format="color" />
+        <!-- Orientation of the indicator. -->
+        <attr name="android:orientation" />
+        <!-- Radius of the circles. This is also the spacing between circles. -->
+        <attr name="radius" format="dimension" />
+        <!-- Whether or not the selected indicator snaps to the circles. -->
+        <attr name="snap" format="boolean" />
+        <!-- Color of the open circles. -->
+        <attr name="strokeColor" format="color" />
+        <!-- Width of the stroke used to draw the circles. -->
+        <attr name="strokeWidth" />
+        <!-- View background -->
+        <attr name="android:background" />
+    </declare-styleable>
+    <declare-styleable name="CustomFontView">
+        <attr name="fontName" format="string" />
+    </declare-styleable>
+    <declare-styleable name="StaggeredGridView">
+        <attr name="drawSelectorOnTop" format="boolean" />
+        <attr name="numColumns" format="integer" />
+        <attr name="itemMargin" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="RippleView">
+        <attr name="rv_alpha" format="integer" />
+        <attr name="rv_framerate" format="integer" />
+        <attr name="rv_rippleDuration" format="integer" />
+        <attr name="rv_zoomDuration" format="integer" />
+        <attr name="rv_color" format="color" />
+        <attr name="rv_centered" format="boolean" />
+        <attr name="rv_type" format="enum">
+            <enum name="simpleRipple" value="0" />
+            <enum name="doubleRipple" value="1" />
+            <enum name="rectangle" value="2" />
+        </attr>
+        <attr name="rv_ripplePadding" format="dimension" />
+        <attr name="rv_zoom" format="boolean" />
+        <attr name="rv_zoomScale" format="float" />
+    </declare-styleable>
+    <declare-styleable name="StaggeredGridView1">
+        <attr name="column_count" format="integer" />
+        <attr name="column_count_portrait" format="integer" />
+        <attr name="column_count_landscape" format="integer" />
+        <attr name="item_margin" format="dimension" />
+        <attr name="grid_paddingLeft" format="dimension" />
+        <attr name="grid_paddingRight" format="dimension" />
+        <attr name="grid_paddingTop" format="dimension" />
+        <attr name="grid_paddingBottom" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="CustomDropdown">
+        <attr name="editable" format="boolean" />
+    </declare-styleable>
+    
+    
+    <declare-styleable name="CircularProgressBar">
+        <attr name="cpb_hasShadow" format="boolean" />
+        <attr name="cpb_progressColor" format="string" />
+        <attr name="cpb_backgroundColor" format="string" />
+        <attr name="cpb_title" format="string" />
+        <attr name="cpb_titleColor" format="string" />
+        <attr name="cpb_subtitle" format="string" />
+        <attr name="cpb_subtitleColor" format="string" />
+        <attr name="cpb_strokeWidth" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="SlidingUpPanelLayout">
+        <attr name="panelHeight" format="dimension" />
+        <attr name="shadowHeight" format="dimension" />
+        <attr name="paralaxOffset" format="dimension" />
+        <attr name="fadeColor" format="color" />
+        <attr name="flingVelocity" format="integer" />
+        <attr name="dragView" format="reference" />
+        <attr name="overlay" format="boolean" />
+        <attr name="ClipPanel" format="boolean"></attr>
+    </declare-styleable>
+    
+     <!-- Defines the custom XML attributes supported for a HorizontalListView -->
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
+
+
+<!--
+    custom XML attributes for singleSelectToggleButton
+-->
+
+    <attr name="tbgCheckedTextColor" format="color"/>
+    <attr name="tbgUncheckedTextColor" format="color"/>
+    <attr name="tbgButtonBackground" format="reference"/>
+    <attr name="tbgCheckedBackground" format="reference"/>
+    <attr name="tbgAnimationType" format="enum">
+        <enum name="none" value="0"/>
+        <enum name="scale" value="1"/>
+        <enum name="alpha" value="2"/>
+    </attr>
+    <attr name="tbgAnimationDuration" format="integer"/>
+
+    <declare-styleable name="ToggleButtonGroup">
+        <attr name="android:textSize"/>
+        <attr name="android:textColor"/>
+        <attr name="android:saveEnabled"/>
+        <attr name="tbgCheckedTextColor"/>
+        <attr name="tbgUncheckedTextColor"/>
+        <attr name="tbgCheckedBackground"/>
+        <attr name="tbgButtonBackground"/>
+        <attr name="tbgAnimationType"/>
+        <attr name="tbgAnimationDuration"/>
+        <attr name="tbgTextButtons" format="reference"/>
+        <attr name="tbgButtonWidth" format="enum|dimension">
+            <enum name="fill_parent" value="-1"/>
+            <enum name="match_parent" value="-1"/>
+            <enum name="wrap_content" value="-2"/>
+        </attr>
+        <attr name="tbgButtonHeight" format="enum|dimension">
+            <enum name="fill_parent" value="-1"/>
+            <enum name="match_parent" value="-1"/>
+            <enum name="wrap_content" value="-2"/>
+        </attr>
+        <attr name="tbgButtonSpacing" format="enum|dimension">
+            <enum name="auto" value="-65536"/>
+        </attr>
+        <attr name="tbgButtonSpacingForLastRow" format="enum|dimension">
+            <enum name="auto" value="-65536"/>
+            <enum name="align" value="-65537"/>
+        </attr>
+        <attr name="tbgRowSpacing" format="enum|dimension">
+            <enum name="auto" value="-65536"/>
+        </attr>
+        <attr name="tbgFlow" format="boolean"/>
+        <attr name="tbgRtl" format="boolean"/>
+        <attr name="tbgButtonTextPaddingTop" format="dimension"/>
+        <attr name="tbgButtonTextPaddingBottom" format="dimension"/>
+        <attr name="tbgButtonTextPaddingLeft" format="dimension"/>
+        <attr name="tbgButtonTextPaddingRight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="ToggleButton">
+        <attr name="android:text"/>
+        <attr name="android:textSize"/>
+        <attr name="tbgCheckedTextColor"/>
+        <attr name="tbgUncheckedTextColor"/>
+        <attr name="tbgCheckedBackground"/>
+        <attr name="tbgButtonBackground"/>
+        <attr name="tbgAnimationType"/>
+        <attr name="tbgAnimationDuration"/>
+    </declare-styleable>
+
+    <declare-styleable name="MySwitch">
+        <!-- Drawable to use as the "thumb" that switches back and forth. -->
+        <attr name="thumb"  format="reference"/>
+        <!-- Drawable to use as the "track" that the switch thumb slides within. -->
+        <attr name="track" format="reference" />
+        <!-- Text to use when the switch is in the checked/"on" state. -->
+        <attr name="textOn" format="reference|string" />
+        <!-- Text to use when the switch is in the unchecked/"off" state. -->
+        <attr name="textOff" format="reference|string" />
+
+        <!-- drawablw to use when the switch is in the checked/"on" state. -->
+        <attr name="drawableOn" format="reference" />
+        <!-- drawablw to use when the switch is in the unchecked/"off" state. -->
+        <attr name="drawableOff" format="reference" />
+
+        <!-- if the switch should operate like iOS UISwitch -->
+        <attr name="pushStyle" format="boolean" />
+        <!-- if text should be drawn on the Thumb or On the track. -->
+        <attr name="textOnThumb" format="boolean" />
+        <!-- if the thumb should be allowed to move more beyond the switch boundaries -->
+        <attr name="thumbExtraMovement" format="dimension" />
+        <!-- Amount of padding on either side of text within the switch thumb. -->
+        <attr name="thumbTextPadding" format="dimension" />
+        <!-- Amount of padding on either side of text within the switch track. -->
+        <attr name="trackTextPadding" format="dimension" />
+        <!-- TextAppearance style for text displayed on the switch thumb. -->
+        <attr name="switchTextAppearanceAttrib" format="reference" />
+        <!-- Minimum width for the switch component -->
+        <attr name="switchMinWidth" format="dimension" />
+        <!-- Minimum height for the switch component -->
+        <attr name="switchMinHeight" format="dimension" />
+        <!-- Minimum space between the switch and caption text -->
+        <attr name="switchPadding" format="dimension" />
+
+        <attr name="orientation" >
+            <!-- the switch moves only on the x-axis(horizontally) -->
+            <enum name="horizontal" value="1" />
+            <!-- the switch moves only on the y-axis(vertically) -->
+            <enum name="vertical" value="0" />
+        </attr>
+
+        <!-- the track drawable will be drawn on top of these background. So if
+             these back grounds were to be visible, the track has to have transparency -->
+        <!-- The background when left side of the switch is visible -->
+        <attr name="leftBackground" format="reference"/>
+
+        <!-- The background when right side of the switch is visible -->
+        <attr name="rightBackground" format="reference"/>
+
+        <!-- We need a mask drawable to mask the background, then draw the track -->
+        <attr name="backgroundMask" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="mySwitchTextAppearanceAttrib">
+        <!-- Text color. -->
+        <attr name="textColor" format="color" />
+        <!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
+        <attr name="textSize"  format="dimension" />
+        <!-- Style (bold, italic, bolditalic) for the text. -->
+        <attr name="textStyle" >
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
+
+        <!-- Typeface (normal, sans, serif, monospace) for the text. -->
+        <attr name="typeface" format="reference">
+            <enum name="normal" value="0" />
+            <enum name="sans" value="1" />
+            <enum name="serif" value="2" />
+            <enum name="monospace" value="3" />
+        </attr>
+        <!-- Color of the text selection highlight. -->
+        <attr name="textColorHighlight" format="color" />
+        <!-- Color of the hint text. -->
+        <attr name="textColorHint" format="color" />
+        <!-- Color of the links. -->
+        <attr name="textColorLink" format="color" />
+        <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
+    </declare-styleable>
+    <!-- Default style for the Switch widget. -->
+    <attr name="mySwitchStyleAttr" format="reference" />
+
+</resources>

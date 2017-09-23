@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Demo Learning</string>
+
+    <string name="font_regular">KozGoPr6N-Regular.otf</string>
+    <string name="font_light">KozGoPr6N-ExtraLight.otf</string>
+    <string name="font_medium">KozGoPro-Medium.otf</string>
+    <string name="font_light_0">KozGoPro-Light.otf</string>
+    <string name="font_bold">KozGoPro-Bold.otf</string>
+
+    <string name="key_title">title</string>
+    <string name="key_descp">descp</string>
+    <string name="key_img_url">imgUrl</string>
+    <string name="key_redrct">redrct</string>
+
+
+</resources>

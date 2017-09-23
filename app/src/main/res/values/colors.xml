@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
+    <color name="splash_background">#9d2735</color>
+    <color name="white">#FFFFFF</color>
+    <color name="l_blue">#9d2735</color>
+    <color name="d_blue">#6D7B92</color>
+    <color name="gray">#80333333</color>
+    <color name="d_gray">#666</color>
+    <color name="black">#000000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="background_grey">#1AB7B0B4</color>
+    <color name="button_grey">#1AB7B0B4</color>
+    <color name="drop_down">#9d2735</color>
+    <color name="blue_sbi">#9d2735</color>
+    <color name="size_select_color">#cccccc</color>
+    <color name="orange">#ff6600</color>
+    <color name="app_green">#74d257</color>
+    <color name="app_green_trans">#B374d257</color>
+    <color name="action_bar_color">#002552</color>
+
+    <color name="red_movie">#9d2735</color>
+    <color name="heading_text">#9d2735</color>
+    <color name="tabUnselected">#80333333</color>
+    <color name="symptom_color_selected">#003366</color>
+    <color name="reaction_color_selected">#003366</color>
+    <color name="static_text_color">#003366</color>
+    <color name="journal_entry_listitem_text_color">#003366</color>
+    <color name="note_text_disabled">#333333</color>
+    <color name="aboutus">#e7e7e7</color>
+    <color name="text">#a0cccccc</color>
+    <color name="bus_blue">#9d2735</color>
+    <color name="white_trance">#33FAFAFA</color>
+    <color name="bonus_bg">#FFFdbF</color>
+    <color name="partner_bg">#eaf9ff</color>
+    <color name="tab_backgroud">#B3FFFFFF</color>
+    <color name="btn_color_red">#9d2735</color>
+    <color name="button_green_alpha">#CC40a837 </color>
+    <color name="btn_color_gray">#33000000</color>
+    <color name="text_color_black">#333333</color>
+    <color name="default_tab_text_color">@color/text_color_hint</color>
+    <color name="text_color_hint">#80333333</color>
+    <color name="text_color_white">#FFFFFF</color>
+    <color name="text_yellow">#ffc20e</color>
+    <color name="tab_host_background">#9d2735</color>
+    <color name="tab_text_color"> #9d2735</color>
+    <color name="list_divider_color"> #26000000</color>
+    <color name="drawer_hover_color"> #1A000000</color>
+    <color name="btn_red_press_colors"> #5e1720</color>
+    <color name="btn_gray_press_color">#66000000</color>
+    <color name="parent_list_item">#1AFFFFFF</color>
+    <color name="parent_list_item_text">#9d2735</color>
+    <color name="child_list_item">#1AFFFFFF</color>
+    <color name="child_list_item_text">#333333</color>
+    <color name="subchild_list_item">#80FFFFFF</color>
+    <color name="subchild_list_itemText">#CC333333</color>
+    <color name="subchild_list_devider">#FFB62F</color>
+    <color name="subchild_list_background">#33FFF3B3</color>
+    <color name="grid_list_background">#B3FFFFFF</color>
+    <color name="text_color_movie">#9d2735</color>
+    <color name="movie_showtime_background">#CCFFFFFF</color>
+    <color name="merchandiselist_item">#CCFFFFFF</color>
+    <color name="list_item">#CCFFFFFF</color>
+    <color name="seat_blocked">#CCA4A4A4</color>
+    <color name="edittext_bacground">#B3FFFFFF</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_button_cancel">#B3FFFFFF</color>
+    <color name="color_button_background">#A6000000</color>
+    <color name="color_green">#74D257</color>
+    <color name="color_count">#CC000000</color>
+    <color name="indicator_color">#0099e5</color>
+    <color name="transparent_black">#80000000</color>
+    <color name="divider_color">#33000000</color>
+    <color name = "remember_pass">#8d8d8d</color>
+    <color name = "black_alpha_70">#B3000000</color>
+    <color name = "black_alpha_50">#80000000</color>
+    <color name="black_alpha_5">#0D000000</color>
+    <color name = "btn_green_back">#4dc850</color>
+    <color name="product_list_backgrd">#0D000000</color>
+    <color name="sub_cat_black">#26000000</color>
+    <color name="chip_bg_color">#33000000</color>
+    <color name="subtext_color">#66000000</color>
+
+</resources>
