@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fillViewport="true"
     android:background="@color/text"
     android:paddingBottom="16dp"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
@@ -13,7 +14,7 @@
        android:layout_width="match_parent"
        android:layout_margin="16dp"
 
-       android:layout_height="wrap_content">
+       android:layout_height="match_parent">
 
        <adv.brand.com.lavanya.customUI.CustomImageView
            android:id="@+id/offerImage"
@@ -39,7 +40,7 @@
            android:layout_below="@+id/offerImage"
            android:orientation="vertical"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+           android:layout_height="match_parent">
        <adv.brand.com.lavanya.customUI.CustomFontTextView
            android:id="@+id/offerTitle"
            android:text="Title Placeholder"
@@ -71,7 +72,7 @@
            android:layout_marginBottom="20dp"
            custom:fontName="@string/font_light"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content" />
+           android:layout_height="match_parent" />
        </LinearLayout>
    </RelativeLayout>
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    android:layout_height="match_parent"
+    android:background="@color/text"
+   >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.demono.AutoScrollViewPager
+            android:id="@+id/viewPager"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_alignParentTop="true"
+            app:slideDirection="right"
+            app:slideDuration="5000"
+            app:slideInterval="2500"
+            app:stopWhenTouch="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/viewPager"
+            android:background="@color/white">
+
+            <adv.brand.com.lavanya.customUI.CustomFontTextView
+                android:id="@+id/txtAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text="About"
+                android:textColor="@color/black_alpha_70"
+                android:textSize="24dp"
+                custom:fontName="@string/font_medium" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/text" />
+
+            <adv.brand.com.lavanya.customUI.CustomFontTextView
+                android:id="@+id/txtAboutDetails"
+                android:text="dasdasdsadsad saddsadasdas fsdfdsfdsfsfsdfsdfsfsfsdfsdfsdfsdfsdfsdfsdfsdfsdffs fdsfsdf sadsadasd sadsadsad  sadsads adsad  sadadsa saddas d asdasd dasdsad asdsa dasdas dsad sdas "
+                android:textColor="@color/black_alpha_50"
+                android:textSize="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:layout_marginBottom="20dp"
+                custom:fontName="@string/font_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

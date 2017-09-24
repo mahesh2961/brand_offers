@@ -7,6 +7,8 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
 
     <application
         android:allowBackup="true"
@@ -16,12 +18,23 @@
         android:name=".BrandApp"
         android:theme="@style/AppTheme">
         <activity android:name="adv.brand.com.lavanya.MainActivity" android:screenOrientation="portrait">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity android:name=".StoreProfileActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".SplashActivity" android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

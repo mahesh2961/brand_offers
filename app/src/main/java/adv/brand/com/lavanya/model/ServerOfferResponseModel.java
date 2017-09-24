@@ -10,6 +10,16 @@ public class ServerOfferResponseModel {
 
     List<OfferModel> offers;
 
+    CustomerInfo customInfo;
+
+    public CustomerInfo getCustomInfo() {
+        return customInfo;
+    }
+
+    public void setCustomInfo(CustomerInfo customInfo) {
+        this.customInfo = customInfo;
+    }
+
     public List<OfferModel> getOffers() {
         return offers;
     }
