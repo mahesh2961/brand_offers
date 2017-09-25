@@ -12,6 +12,16 @@ public class ServerOfferResponseModel {
 
     CustomerInfo customInfo;
 
+    List<String> filters;
+
+    public List<String> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<String> filters) {
+        this.filters = filters;
+    }
+
     public CustomerInfo getCustomInfo() {
         return customInfo;
     }

@@ -27,6 +27,7 @@
 
         <activity android:name=".StoreProfileActivity" android:screenOrientation="portrait"/>
         <activity android:name=".OfferDetailsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".FilterActivity" android:screenOrientation="portrait"/>
 
 
         <activity android:name=".SplashActivity" android:screenOrientation="portrait"

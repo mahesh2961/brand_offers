@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/text"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <adv.brand.com.lavanya.customUI.cutomPagerLibrary.CustomFontEditText
+        android:id="@+id/editSearch"
+        android:layout_width="match_parent"
+        custom:fontName="@string/font_medium"
+        android:hint="Search category"
+        android:padding="5dp"
+        android:textSize="15dp"
+        android:textColor="@color/black_alpha_70"
+        android:textStyle="italic"
+        android:background="@drawable/brand_image_shape"
+        android:layout_height="50dp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/filterListview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

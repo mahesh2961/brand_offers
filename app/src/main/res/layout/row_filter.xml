@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_marginTop="0.5dp"
+    android:layout_marginBottom="0.5dp"
+    android:background="@color/white"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <adv.brand.com.lavanya.customUI.CustomFontTextView
+        android:id="@+id/filterTitle"
+        android:textSize="15dp"
+        android:text="Filter"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:layout_height="50dp" />
+
+    <CheckBox
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/filterCheckbox"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+</RelativeLayout>

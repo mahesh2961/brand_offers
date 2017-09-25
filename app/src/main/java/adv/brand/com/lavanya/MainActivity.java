@@ -110,6 +110,7 @@ public class MainActivity extends BaseActivity {
         {
             AppDataHandler.getInstance().reset();
             AppDataHandler.getInstance().setAppData(responseModel);
+            AppDataHandler.getInstance().saveOffers();
             setView();
            /* List<ChildFragmentModel> fragments = new ArrayList<>();
             for (int i = 0; i < responseModel.getOffers().size(); i++) {
@@ -190,6 +191,11 @@ public class MainActivity extends BaseActivity {
                 prefHandler.putBoolean(KEY_IS_LISTVIEW, !prefHandler.getBoolean(KEY_IS_LISTVIEW));
                 setView();
             }
+        }
+        else if(item.getItemId()==R.id.action_filter)
+        {
+            Intent intent= new Intent(this,FilterActivity.class);
+            startActivity(intent);
         }
 
             return super.onOptionsItemSelected(item);
