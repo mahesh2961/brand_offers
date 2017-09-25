@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:elevation="2dp"
+    android:padding="16dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/brandImage"
+        android:layout_alignParentLeft="true"
+        android:layout_width="100dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="100dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/brandImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <adv.brand.com.lavanya.customUI.CustomFontTextView
+            android:id="@+id/offerTitle"
+            android:text="Title Placeholder"
+            android:textColor="@color/black_alpha_70"
+            android:textSize="20dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="5dp"
+            custom:fontName="@string/font_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/text"
+            android:layout_height="0.5dp"/>
+
+        <adv.brand.com.lavanya.customUI.CustomFontTextView
+            android:id="@+id/offerDescription"
+            android:text="dasdasdsadsad saddsadasdas sadsadasd sadsadsad  sadsads adsad  sadadsa saddas d asdasd dasdsad asdsa dasdas dsad sdas "
+            android:textColor="@color/black_alpha_50"
+            android:textSize="12dp"
+            android:paddingRight="5dp"
+            android:maxLines="4"
+            android:ellipsize="end"
+            custom:fontName="@string/font_light"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

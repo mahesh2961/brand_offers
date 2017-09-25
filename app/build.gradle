@@ -36,6 +36,8 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.demoNo:AutoScrollViewPager:v1.0.2'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+
 
     testCompile 'junit:junit:4.12'
 

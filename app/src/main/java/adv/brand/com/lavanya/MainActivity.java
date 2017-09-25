@@ -12,9 +12,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,12 +22,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -37,6 +36,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import adv.brand.com.lavanya.fragments.ListViewFragment;
 import adv.brand.com.lavanya.fragments.OfferFragment;
 import adv.brand.com.lavanya.fragments.PageBaseFragment;
 import adv.brand.com.lavanya.model.AppDataHandler;
@@ -45,6 +45,8 @@ import adv.brand.com.lavanya.model.CustomerInfo;
 import adv.brand.com.lavanya.model.OfferModel;
 import adv.brand.com.lavanya.model.ServerOfferResponseModel;
 import adv.brand.com.lavanya.utils.BaseActivity;
+import adv.brand.com.lavanya.utils.OnItemClickListener;
+import adv.brand.com.lavanya.utils.PrefHandler;
 
 public class MainActivity extends BaseActivity {
 
@@ -55,6 +57,14 @@ public class MainActivity extends BaseActivity {
 
     ProgressBar progressBar;
 
+    PrefHandler prefHandler;
+
+    PageBaseFragment fragmentListview;
+
+    FrameLayout frameContainer;
+
+    private static String KEY_IS_LISTVIEW="isListView";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +72,26 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.layout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        frameContainer=(FrameLayout)findViewById(R.id.frameContainer);
+        prefHandler= new PrefHandler(BrandApp.getInstance());
+
         refreshData();
 //        getSetData();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(prefHandler.getBoolean(KEY_IS_LISTVIEW))
+        {
+            menu.findItem(R.id.action_view_change).setTitle("View Details");
+        }
+        else
+            menu.findItem(R.id.action_view_change).setTitle("View List");
+
+
+
+        return super.onPrepareOptionsMenu(menu);
+
     }
 
     public void refreshData() {
@@ -78,19 +106,20 @@ public class MainActivity extends BaseActivity {
 
         ServerOfferResponseModel responseModel = gson.fromJson(data, ServerOfferResponseModel.class);
 
-        if (responseModel != null && responseModel.getOffers() != null && !responseModel.getOffers().isEmpty()) {
-            List<ChildFragmentModel> fragments = new ArrayList<>();
+        if (responseModel != null && responseModel.getOffers() != null && !responseModel.getOffers().isEmpty())
+        {
+            AppDataHandler.getInstance().reset();
+            AppDataHandler.getInstance().setAppData(responseModel);
+            setView();
+           /* List<ChildFragmentModel> fragments = new ArrayList<>();
             for (int i = 0; i < responseModel.getOffers().size(); i++) {
 
                 OfferModel offer = responseModel.getOffers().get(i);
-                AppDataHandler.getInstance().reset();
-                AppDataHandler.getInstance().setAppData(responseModel);
                 ChildFragmentModel model = new ChildFragmentModel();
                 PageBaseFragment fragment = new OfferFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString(getString(R.string.key_img_url), offer.getImgUrl());
                 bundle.putString(getString(R.string.key_descp), offer.getDesc());
-
 
                 bundle.putString(getString(R.string.key_title), offer.getTitle());
                 bundle.putString(getString(R.string.key_redrct), offer.getRedirect());
@@ -104,7 +133,9 @@ public class MainActivity extends BaseActivity {
 
             adapter = new ViewPagerAdapter(getSupportFragmentManager());
             adapter.setList(fragments);
-            viewPager.setAdapter(adapter);
+            viewPager.setAdapter(adapter);*/
+
+
         }
 
     }
@@ -153,8 +184,63 @@ public class MainActivity extends BaseActivity {
 //                startActivity(surf);
             }
         }
+        else if(item.getItemId()==R.id.action_view_change)
+        {
+            if(AppDataHandler.getInstance().getOffers()!=null && AppDataHandler.getInstance().getOffers().size()>0) {
+                prefHandler.putBoolean(KEY_IS_LISTVIEW, !prefHandler.getBoolean(KEY_IS_LISTVIEW));
+                setView();
+            }
+        }
 
             return super.onOptionsItemSelected(item);
+    }
+
+
+    public void setView()
+    {
+        if(prefHandler.getBoolean(KEY_IS_LISTVIEW))
+        {
+                if(fragmentListview==null)
+                {
+                    fragmentListview= new ListViewFragment();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction =
+                            fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frameContainer, fragmentListview);
+                    fragmentTransaction.commit();
+                }
+            viewPager.setVisibility(View.GONE);
+            frameContainer.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            if(adapter==null) {
+                List<ChildFragmentModel> fragments = new ArrayList<>();
+                for (int i = 0; i < AppDataHandler.getInstance().getOffers().size(); i++) {
+
+                    OfferModel offer = AppDataHandler.getInstance().getOffers().get(i);
+                    ChildFragmentModel model = new ChildFragmentModel();
+                    PageBaseFragment fragment = new OfferFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getString(R.string.key_img_url), offer.getImgUrl());
+                    bundle.putString(getString(R.string.key_descp), offer.getDesc());
+
+                    bundle.putString(getString(R.string.key_title), offer.getTitle());
+                    bundle.putString(getString(R.string.key_redrct), offer.getRedirect());
+                    fragment.setArguments(bundle);
+                    model.fragment = fragment;
+                    model.id = i;
+                    model.title = offer.getTitle();
+                    fragments.add(model);
+                }
+
+                adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                adapter.setList(fragments);
+                viewPager.setAdapter(adapter);
+            }
+            viewPager.setVisibility(View.VISIBLE);
+            frameContainer.setVisibility(View.GONE);
+        }
     }
 
     public  void makeCall()
@@ -230,6 +316,7 @@ public class MainActivity extends BaseActivity {
 
 
 
+
     class ViewPagerAdapter extends FragmentStatePagerAdapter {
         List<ChildFragmentModel> mFragmentList = new ArrayList<>();
         FragmentManager manager;
@@ -295,6 +382,7 @@ public class MainActivity extends BaseActivity {
             // show progress dialog when downloading
             progressBar.setVisibility(View.VISIBLE);
             viewPager.setVisibility(View.GONE);
+            frameContainer.setVisibility(View.GONE);
 
         }
 
@@ -336,7 +424,7 @@ public class MainActivity extends BaseActivity {
             // TODO change text view id for yourself
             if(!TextUtils.isEmpty(result))
             {
-                viewPager.setVisibility(View.VISIBLE);
+//                viewPager.setVisibility(View.VISIBLE);
                 getSetData(result);
             }
           progressBar.setVisibility(View.GONE);
