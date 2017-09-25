@@ -1,7 +1,9 @@
 package adv.brand.com.lavanya;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,8 @@ import adv.brand.com.lavanya.customUI.cutomPagerLibrary.CustomFontEditText;
 import adv.brand.com.lavanya.model.AppDataHandler;
 import adv.brand.com.lavanya.model.CategoryFilterModel;
 import adv.brand.com.lavanya.utils.BaseActivity;
+import adv.brand.com.lavanya.utils.DBHelper;
+import adv.brand.com.lavanya.utils.Utils;
 
 /**
  * Created by maheshb on 25/9/17.
@@ -93,5 +99,26 @@ public class FilterActivity extends BaseActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.filter_screen_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.action_save && adapter!=null)
+        {
+            List<String> filterCategories=adapter.getSelectedCategories();
+
+            if(Utils.isValid(filterCategories)) {
+                AppDataHandler.getInstance().setFilteredOffers(DBHelper.getInstance(BrandApp.getInstance()).getOffersByCategories(filterCategories));
+                Intent intent= new Intent("catchange");
+                LocalBroadcastManager.getInstance(BrandApp.getInstance()).sendBroadcast(intent);
+                finish();
+            }
+            else
+            {
+                Utils.showToastShort(this,"No Categories selected.");
+            }
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 }

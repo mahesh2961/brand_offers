@@ -28,6 +28,7 @@ public class ListViewFragment extends PageBaseFragment implements OnItemClickLis
 
     RecyclerView recyclerView;
     ListviewAdapter adapter;
+    List<OfferModel> offerModels;
 
     @Nullable
     @Override
@@ -37,10 +38,14 @@ public class ListViewFragment extends PageBaseFragment implements OnItemClickLis
         return view;
     }
 
+    public void setOfferModels(List<OfferModel> offerModels) {
+        this.offerModels = offerModels;
+    }
+
     public void initializeView(View view)
     {
         recyclerView=(RecyclerView)view.findViewById(R.id.recyclerView);
-        List<OfferModel> offerModels= AppDataHandler.getInstance().getOffers();
+//        List<OfferModel> offerModels=offerModels;
         if(offerModels!=null && offerModels.size()>0)
         {
             adapter= new ListviewAdapter(offerModels,this);

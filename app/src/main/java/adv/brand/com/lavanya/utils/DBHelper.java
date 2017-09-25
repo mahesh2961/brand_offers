@@ -2,10 +2,12 @@ package adv.brand.com.lavanya.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adv.brand.com.lavanya.model.OfferModel;
@@ -94,6 +96,58 @@ public class DBHelper extends SQLiteOpenHelper {
 		}
 
 
+	}
+
+	public List<OfferModel> getOffersByCategories(List<String> categories)
+	{
+		List<OfferModel> offers=null;
+		Cursor cursor=null;
+		try {
+			SQLiteDatabase db=getDb();
+			String query="Select * from "+OFFERS_TABLE+"where"+(makeLikeQuery(COL_CATEGORY,categories));
+			Log.d("kk", "getOffersByCategories: Query::"+query);
+			cursor =db.rawQuery(query,null);
+			if (cursor.getCount() > 0)
+			{
+				offers= new ArrayList<>();
+				cursor.moveToFirst();
+				do {
+					OfferModel model=new OfferModel();
+					model.setId(cursor.getString(cursor.getColumnIndex(COL_ID)));
+					model.setCategory(cursor.getString(cursor.getColumnIndex(COL_CATEGORY)));
+					model.setDesc(cursor.getString(cursor.getColumnIndex(COL_DESCP)));
+					model.setTitle(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
+					model.setImgUrl(cursor.getString(cursor.getColumnIndex(COL_IMG_URL)));
+					model.setRedirect(cursor.getString(cursor.getColumnIndex(COL_REDRCT_URL)));
+					offers.add(model);
+				} while (cursor.moveToNext());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (cursor!=null)
+			{
+				cursor.close();
+				cursor=null;
+			}
+		}
+      return offers;
+	}
+
+	private String makeLikeQuery(String coloumn,List<String> values)
+	{
+      String result="";
+		for (int i = 0; i < values.size(); i++) {
+			if(i!=(values.size()-1)) {
+				result = result + " " + coloumn + " like '%" + values.get(i) + "%' and";
+			}
+			else
+				result = result + " " + coloumn + " like '%" + values.get(i) + "%'";
+
+		}
+
+		return result;
 	}
 
 	@Override

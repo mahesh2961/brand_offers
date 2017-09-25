@@ -1,8 +1,11 @@
 package adv.brand.com.lavanya;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -47,6 +51,7 @@ import adv.brand.com.lavanya.model.ServerOfferResponseModel;
 import adv.brand.com.lavanya.utils.BaseActivity;
 import adv.brand.com.lavanya.utils.OnItemClickListener;
 import adv.brand.com.lavanya.utils.PrefHandler;
+import adv.brand.com.lavanya.utils.Utils;
 
 public class MainActivity extends BaseActivity {
 
@@ -59,11 +64,13 @@ public class MainActivity extends BaseActivity {
 
     PrefHandler prefHandler;
 
-    PageBaseFragment fragmentListview;
+    ListViewFragment fragmentListview;
 
     FrameLayout frameContainer;
 
     private static String KEY_IS_LISTVIEW="isListView";
+
+    CategoryListener receiver;
 
 
     @Override
@@ -76,7 +83,19 @@ public class MainActivity extends BaseActivity {
         prefHandler= new PrefHandler(BrandApp.getInstance());
 
         refreshData();
+        receiver= new CategoryListener();
+
+        IntentFilter intentFilter= new IntentFilter("catchange");
+        LocalBroadcastManager.getInstance(BrandApp.getInstance()).registerReceiver(receiver,intentFilter);
+
+
 //        getSetData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     @Override
@@ -209,6 +228,7 @@ public class MainActivity extends BaseActivity {
                 if(fragmentListview==null)
                 {
                     fragmentListview= new ListViewFragment();
+                    fragmentListview.setOfferModels(AppDataHandler.getInstance().getOffers());
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction =
                             fragmentManager.beginTransaction();
@@ -436,4 +456,21 @@ public class MainActivity extends BaseActivity {
           progressBar.setVisibility(View.GONE);
         }
     }
+
+
+    class CategoryListener extends BroadcastReceiver
+    {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            List<OfferModel> filterOffers= new ArrayList<>();
+            if(Utils.isValid(filterOffers))
+            {
+                //Todo handle  via global key in prefs
+            }
+        }
+    }
+
+
+
 }

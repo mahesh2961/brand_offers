@@ -2,6 +2,7 @@ package adv.brand.com.lavanya.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,8 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder,final int position) {
 
         holder.textView.setText(currentList.get(position).getTitle());
-
+        holder.checkBox.setOnCheckedChangeListener(null);
+        holder.checkBox.setChecked(currentList.get(position).isSelected());
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -56,7 +58,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return categoryList.size();
+        return currentList.size();
     }
 
     class ViewHolder  extends RecyclerView.ViewHolder
@@ -70,6 +72,20 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
             checkBox = (CheckBox) view.findViewById(R.id.filterCheckbox);
 
         }
+    }
+
+    public List<String> getSelectedCategories()
+    {
+        List<String> selectedCategories= new ArrayList<>();
+        for (CategoryFilterModel model:currentList) {
+            if (model.isSelected())
+            {
+                selectedCategories.add(model.getTitle());
+                Log.d("kk", "getSelectedCategories: "+model.getTitle());
+            }
+        }
+
+        return selectedCategories;
     }
 
     public CategoryFilter getFilter()

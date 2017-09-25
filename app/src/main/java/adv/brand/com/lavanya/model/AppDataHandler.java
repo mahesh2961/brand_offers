@@ -17,6 +17,8 @@ public class AppDataHandler {
 
     OfferModel currentOffer;
 
+    List<OfferModel> filteredOffers;
+
     public List<String> getCategoryList() {
         if(model!=null)
             return model.getFilters();
@@ -95,4 +97,11 @@ public class AppDataHandler {
     }
 
 
+    public List<OfferModel> getFilteredOffers() {
+        return filteredOffers;
+    }
+
+    public void setFilteredOffers(List<OfferModel> filteredOffers) {
+        this.filteredOffers = filteredOffers;
+    }
 }
