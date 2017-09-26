@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="30dp"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_background"
+    android:layout_height="wrap_content">
+
+    <adv.brand.com.lavanya.customUI.CustomFontTextView
+        android:id="@+id/dialogTitle"
+        android:padding="5dp"
+        android:text="Title"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        custom:fontName="@string/font_medium"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:id="@+id/sepView"
+        android:background="@color/text"
+        android:layout_below="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <adv.brand.com.lavanya.customUI.CustomFontTextView
+        android:layout_below="@+id/sepView"
+        android:id="@+id/dialogMessage"
+        android:text="ddsfsfsfsdfsdfdsfsdfssdffsfds"
+        android:textColor="@color/black_alpha_70"
+        custom:fontName="@string/font_light"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/sepView1"
+        android:background="@color/text"
+        android:layout_below="@+id/dialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_below="@+id/sepView1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <adv.brand.com.lavanya.customUI.CustomButton
+            android:id="@+id/btnPositive"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Ok"
+            android:textSize="15dp"
+            custom:fontName="@string/font_medium"
+            android:background="@drawable/left_button_curve"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:background="@color/text"
+            android:layout_height="match_parent"/>
+
+        <adv.brand.com.lavanya.customUI.CustomButton
+            android:id="@+id/btnNegative"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:background="@drawable/righ_button_curve"
+            android:textSize="15dp"
+            custom:fontName="@string/font_medium"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

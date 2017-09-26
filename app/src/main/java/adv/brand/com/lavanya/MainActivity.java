@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -28,8 +29,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -40,6 +45,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import adv.brand.com.lavanya.customUI.CustomDialog;
 import adv.brand.com.lavanya.fragments.ListViewFragment;
 import adv.brand.com.lavanya.fragments.OfferFragment;
 import adv.brand.com.lavanya.fragments.PageBaseFragment;
@@ -54,6 +60,7 @@ import adv.brand.com.lavanya.utils.PrefHandler;
 import adv.brand.com.lavanya.utils.Utils;
 
 public class MainActivity extends BaseActivity {
+
 
 
     ViewPager viewPager;
@@ -75,9 +82,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
+        super.onCreate(savedInstanceState);
 
+        toolbar.inflateMenu(R.menu.home_screen_menu);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         frameContainer=(FrameLayout)findViewById(R.id.frameContainer);
@@ -89,8 +97,109 @@ public class MainActivity extends BaseActivity {
         IntentFilter intentFilter= new IntentFilter("catchange");
         LocalBroadcastManager.getInstance(BrandApp.getInstance()).registerReceiver(receiver,intentFilter);
 
+//        displayTour();
+
+
+
+        final Handler handler=new Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("KK", "Posting");
+                displayTour();
+               /* displayTour();
+                handler.removeCallbacks(this);
+                handler.removeCallbacksAndMessages(null);*/
+            }
+        },1*1000);
+
+
+
+
 
 //        getSetData();
+    }
+
+
+    public void displayTour()
+    {
+        final TapTargetSequence sequence = new TapTargetSequence(this)
+                .targets(
+                        // This tap target will target the back button, we just need to pass its containing toolbar
+//                        TapTarget.forToolbarNavigationIcon(toolbar, "This is the back button", sassyDesc).id(1),
+                        // Likewise, this tap target will target the search button
+                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_refresh, "Refresh for new updated from store")
+                                .dimColor(android.R.color.black)
+                                .outerCircleColor(R.color.colorAccent)
+                                .targetCircleColor(android.R.color.black)
+                                .transparentTarget(true)
+                                .textColor(R.color.black_alpha_70)
+                                .id(1),
+
+                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_call, "Ease to connect with store, JUST Call!")
+                                .dimColor(android.R.color.black)
+                                .outerCircleColor(R.color.colorAccent)
+                                .targetCircleColor(android.R.color.black)
+                                .transparentTarget(true)
+                                .textColor(R.color.black_alpha_70)
+                                .id(2),
+
+                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_filter, "Filter Store updates as required.")
+                                .dimColor(android.R.color.black)
+                                .outerCircleColor(R.color.colorAccent)
+                                .targetCircleColor(android.R.color.black)
+                                .transparentTarget(true)
+                                .textColor(R.color.black_alpha_70)
+                                .id(3),
+
+                        // You can also target the overflow button in your toolbar
+                        TapTarget.forToolbarOverflow(toolbar, "Explore different features")
+                                .outerCircleColor(R.color.colorAccent)
+                                .targetCircleColor(android.R.color.black)
+                                .transparentTarget(true)
+                                .textColor(R.color.black_alpha_70)
+                                .id(4)
+                        // This tap target will target our droid buddy at the given target rect
+                       /* TapTarget.forBounds(droidTarget, "Oh look!", "You can point to any part of the screen. You also can't cancel this one!")
+                                .cancelable(false)
+                                .icon(droid)
+                                .id(4)*/
+                )
+                .listener(new TapTargetSequence.Listener() {
+                    // This listener will tell us when interesting(tm) events happen in regards
+                    // to the sequence
+                    @Override
+                    public void onSequenceFinish() {
+//                        ((TextView) findViewById(R.id.educated)).setText("Congratulations! You're educated now!");
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                        Log.d("TapTargetView", "Clicked on " + lastTarget.id());
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                       /* final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Uh oh")
+                                .setMessage("You canceled the sequence")
+                                .setPositiveButton("Oops", null).show();
+                        TapTargetView.showFor(dialog,
+                                TapTarget.forView(dialog.getButton(DialogInterface.BUTTON_POSITIVE), "Uh oh!", "You canceled the sequence at step " + lastTarget.id())
+                                        .cancelable(false)
+                                        .tintTarget(false), new TapTargetView.Listener() {
+                                    @Override
+                                    public void onTargetClick(TapTargetView view) {
+                                        super.onTargetClick(view);
+                                        dialog.dismiss();
+                                    }
+                                });*/
+                    }
+                });
+
+        sequence.continueOnCancel(true);
+        sequence.start();
     }
 
     @Override
@@ -141,7 +250,7 @@ public class MainActivity extends BaseActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home_screen_menu, menu);
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -296,7 +405,29 @@ public class MainActivity extends BaseActivity {
 
     public void displayCallConfirmationDialog()
     {
-        AlertDialog.Builder builder;
+
+
+        final CustomDialog dialog= new CustomDialog(this);
+        dialog.setTitle("Call");
+        dialog.setMessage("This will make a call to store, do you wish to proceed?");
+        dialog.setPositiveListner(new CustomDialog.onPositveClickerListener() {
+            @Override
+            public void onClick() {
+
+                dialog.dismiss();
+                makeCall();
+            }
+        });
+
+        dialog.setNegativeListner(new CustomDialog.onNegativeClickListener() {
+            @Override
+            public void onClick() {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+       /* AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
         } else {
@@ -316,7 +447,7 @@ public class MainActivity extends BaseActivity {
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .show();*/
     }
 
     @Override

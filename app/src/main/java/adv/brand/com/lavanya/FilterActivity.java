@@ -44,8 +44,8 @@ public class FilterActivity extends BaseActivity
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.filer_list_screen);
+        super.onCreate(savedInstanceState);
         prefHandler= new PrefHandler(BrandApp.getInstance());
         editText=(CustomFontEditText)findViewById(R.id.editSearch);
         recyclerView=(RecyclerView)findViewById(R.id.filterListview);

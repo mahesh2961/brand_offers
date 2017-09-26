@@ -24,6 +24,7 @@ public class BrandApp extends MultiDexApplication {
 
         ImageLoader.getInstance().init(config);
 
+
     }
 
     public static BrandApp getInstance()
