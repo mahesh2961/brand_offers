@@ -3,13 +3,13 @@ package adv.brand.com.lavanya;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -17,24 +17,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -55,7 +54,6 @@ import adv.brand.com.lavanya.model.CustomerInfo;
 import adv.brand.com.lavanya.model.OfferModel;
 import adv.brand.com.lavanya.model.ServerOfferResponseModel;
 import adv.brand.com.lavanya.utils.BaseActivity;
-import adv.brand.com.lavanya.utils.OnItemClickListener;
 import adv.brand.com.lavanya.utils.PrefHandler;
 import adv.brand.com.lavanya.utils.Utils;
 
@@ -97,22 +95,12 @@ public class MainActivity extends BaseActivity {
         IntentFilter intentFilter= new IntentFilter("catchange");
         LocalBroadcastManager.getInstance(BrandApp.getInstance()).registerReceiver(receiver,intentFilter);
 
+        displayShowcaseView();
 //        displayTour();
 
 
 
-        final Handler handler=new Handler();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.i("KK", "Posting");
-                displayTour();
-               /* displayTour();
-                handler.removeCallbacks(this);
-                handler.removeCallbacksAndMessages(null);*/
-            }
-        },1*1000);
 
 
 
@@ -121,9 +109,35 @@ public class MainActivity extends BaseActivity {
 //        getSetData();
     }
 
+    public void displayShowcaseView()
+    {
+        if (!prefHandler.getBoolean(Utils.KEY_IS_TOUR_DISPLAYED)) {
+            final Handler handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("KK", "Posting");
+                    displayTour();
+                   /* displayTour();
+                    handler.removeCallbacks(this);
+                    handler.removeCallbacksAndMessages(null);*/
+                }
+            },1*1000);
+        }
+    }
+
 
     public void displayTour()
     {
+        final Drawable droid = ContextCompat.getDrawable(this, R.drawable.ic_right);
+
+
+        // Tell our droid buddy where we want him to appear
+        final Display display = getWindowManager().getDefaultDisplay();
+        final Rect droidTarget = new Rect(0, 0, droid.getIntrinsicWidth() * 2, droid.getIntrinsicHeight() * 2);
+        droidTarget.offset((display.getWidth() / 2)+150, display.getHeight() / 2);
+
+
         final TapTargetSequence sequence = new TapTargetSequence(this)
                 .targets(
                         // This tap target will target the back button, we just need to pass its containing toolbar
@@ -159,7 +173,16 @@ public class MainActivity extends BaseActivity {
                                 .targetCircleColor(android.R.color.black)
                                 .transparentTarget(true)
                                 .textColor(R.color.black_alpha_70)
-                                .id(4)
+                                .id(4),
+
+                        TapTarget.forBounds(droidTarget, "Scroll right to see store updates")
+                                .cancelable(true)
+                                .icon(droid)
+                                .outerCircleColor(R.color.colorAccent)
+                                .targetCircleColor(android.R.color.white)
+                                .transparentTarget(false)
+                                .textColor(R.color.black_alpha_70)
+                                .id(5)
                         // This tap target will target our droid buddy at the given target rect
                        /* TapTarget.forBounds(droidTarget, "Oh look!", "You can point to any part of the screen. You also can't cancel this one!")
                                 .cancelable(false)
@@ -200,6 +223,7 @@ public class MainActivity extends BaseActivity {
 
         sequence.continueOnCancel(true);
         sequence.start();
+        prefHandler.putBoolean(Utils.KEY_IS_TOUR_DISPLAYED,true);
     }
 
     @Override

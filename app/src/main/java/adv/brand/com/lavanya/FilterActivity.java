@@ -46,6 +46,11 @@ public class FilterActivity extends BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.filer_list_screen);
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.ic_back));
+
         prefHandler= new PrefHandler(BrandApp.getInstance());
         editText=(CustomFontEditText)findViewById(R.id.editSearch);
         recyclerView=(RecyclerView)findViewById(R.id.filterListview);
@@ -146,6 +151,10 @@ public class FilterActivity extends BaseActivity
             Intent intent= new Intent("catchange");
             LocalBroadcastManager.getInstance(BrandApp.getInstance()).sendBroadcast(intent);
             finish();
+        }
+        else if (item.getItemId()==android.R.id.home)
+        {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
 

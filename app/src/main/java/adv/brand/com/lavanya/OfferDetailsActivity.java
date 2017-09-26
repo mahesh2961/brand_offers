@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
 
 import adv.brand.com.lavanya.fragments.OfferFragment;
 import adv.brand.com.lavanya.fragments.PageBaseFragment;
@@ -20,10 +21,14 @@ public class OfferDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.offer_details_activity);
-
+        super.onCreate(savedInstanceState);
         OfferModel offerModel=AppDataHandler.getInstance().getCurrentOffer();
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.ic_back));
+
 
         if(offerModel!=null) {
             PageBaseFragment fragment = new OfferFragment();
@@ -44,5 +49,15 @@ public class OfferDetailsActivity extends BaseActivity {
             finish();
             return;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId()==android.R.id.home)
+        {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

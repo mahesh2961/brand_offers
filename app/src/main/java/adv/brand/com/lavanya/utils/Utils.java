@@ -13,6 +13,8 @@ import java.util.List;
 public class Utils {
 
     public static  String KEY_IS_FILTER_APPLYIED="isFilter";
+    public static  String KEY_IS_TOUR_DISPLAYED ="tourDone";
+
 
     public static boolean isValid(List list)
     {
