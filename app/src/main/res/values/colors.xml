@@ -86,6 +86,7 @@
     <color name="chip_bg_color">#33000000</color>
     <color name="subtext_color">#66000000</color>
     <color name="brand_text_color">#B3000000</color>
+    <color name="overlay">#334285f4</color>
 
 
 </resources>

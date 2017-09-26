@@ -1,5 +1,6 @@
 package adv.brand.com.lavanya.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -26,8 +27,11 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import adv.brand.com.lavanya.BrandApp;
 import adv.brand.com.lavanya.R;
+import adv.brand.com.lavanya.WebviewActivity;
 import adv.brand.com.lavanya.customUI.CustomFontTextView;
 import adv.brand.com.lavanya.customUI.CustomImageView;
+import adv.brand.com.lavanya.model.AppDataHandler;
+import adv.brand.com.lavanya.model.OfferModel;
 import adv.brand.com.lavanya.utils.CustomVolleyRequestQueue;
 
 /**
@@ -88,11 +92,23 @@ public class OfferFragment extends PageBaseFragment {
         txtTitle.setText(title);
         txtdesc.setText(desc);
 
+        brandImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OfferModel offerModel= new OfferModel();
+                offerModel.setTitle(title);
+                offerModel.setDesc(desc);
+                offerModel.setImgUrl(imageUrl);
+                offerModel.setRedirect(redirectUrl);
+                AppDataHandler.getInstance().setCurrentOffer(offerModel);
+                Intent intent= new Intent(getContext(), WebviewActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
        mImageLoader.get(imageUrl, ImageLoader.getImageListener(brandImg, R.drawable.home_stub, android.R.drawable.ic_dialog_alert));
        brandImg.setImageUrl(imageUrl, mImageLoader);
-
-
 
     }
 

@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 
 	// TODO Auto-generated method stub
-		String ReportTable = "CREATE TABLE IF NOT EXISTS" + OFFERS_TABLE + " ("
+		String ReportTable = "CREATE TABLE IF NOT EXISTS " + OFFERS_TABLE + " ("
 				+ COL_ID + " text not null, "
 				+ COL_TITLE + " text, "
 				+ COL_DESCP + " text, "

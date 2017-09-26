@@ -144,24 +144,24 @@ public class MainActivity extends BaseActivity {
 //                        TapTarget.forToolbarNavigationIcon(toolbar, "This is the back button", sassyDesc).id(1),
                         // Likewise, this tap target will target the search button
                         TapTarget.forToolbarMenuItem(toolbar, R.id.action_refresh, "Refresh for new updated from store")
-                                .dimColor(android.R.color.black)
-                                .outerCircleColor(R.color.colorAccent)
+                                .dimColor(R.color.overlay)
+                                .outerCircleColor(R.color.overlay)
                                 .targetCircleColor(android.R.color.black)
                                 .transparentTarget(true)
                                 .textColor(R.color.black_alpha_70)
                                 .id(1),
 
                         TapTarget.forToolbarMenuItem(toolbar, R.id.action_call, "Ease to connect with store, JUST Call!")
-                                .dimColor(android.R.color.black)
-                                .outerCircleColor(R.color.colorAccent)
+                                .dimColor(R.color.overlay)
+                                .outerCircleColor(R.color.overlay)
                                 .targetCircleColor(android.R.color.black)
                                 .transparentTarget(true)
                                 .textColor(R.color.black_alpha_70)
                                 .id(2),
 
                         TapTarget.forToolbarMenuItem(toolbar, R.id.action_filter, "Filter Store updates as required.")
-                                .dimColor(android.R.color.black)
-                                .outerCircleColor(R.color.colorAccent)
+                                .dimColor(R.color.overlay)
+                                .outerCircleColor(R.color.overlay)
                                 .targetCircleColor(android.R.color.black)
                                 .transparentTarget(true)
                                 .textColor(R.color.black_alpha_70)
@@ -169,8 +169,8 @@ public class MainActivity extends BaseActivity {
 
                         // You can also target the overflow button in your toolbar
                         TapTarget.forToolbarOverflow(toolbar, "Explore different features")
-                                .outerCircleColor(R.color.colorAccent)
-                                .targetCircleColor(android.R.color.black)
+                                .dimColor(R.color.overlay)
+                                .outerCircleColor(R.color.overlay)
                                 .transparentTarget(true)
                                 .textColor(R.color.black_alpha_70)
                                 .id(4),
