@@ -3,6 +3,7 @@ package adv.brand.com.lavanya.utils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -18,7 +19,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	private static  final int DB_VERSION=1;
 
-	/*----------------------------Report Table----------------------------------------------*/
 	public static final String OFFERS_TABLE = "Offers";
 	public static final String COL_ID = "Id";
 	public static final String COL_TITLE = "Title";
@@ -26,6 +26,9 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String COL_CATEGORY = "Catgry";
 	public static final String COL_IMG_URL="ImgUrl";
 	public static final String COL_REDRCT_URL="RedrctUrl";
+
+	public static final String FILTER_TABLE = "filters";
+
 
 	private static DBHelper instance;
 
@@ -56,7 +59,12 @@ public class DBHelper extends SQLiteOpenHelper {
 				+ COL_IMG_URL + " text,"
 				+ COL_REDRCT_URL+" text );";
 
+
+		String filterTable = "CREATE TABLE " + FILTER_TABLE+ " ("
+				+ COL_TITLE+" text );";
+
 		db.execSQL(ReportTable);
+		db.execSQL(filterTable);
 
 
 	}
@@ -98,13 +106,86 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	}
 
+	public void insertFilters(List<String> selectedFilters)
+	{
+		if (selectedFilters!=null && selectedFilters.size()>0) {
+			SQLiteDatabase db=getDb();
+			db.delete(FILTER_TABLE,null,null);
+			db.beginTransaction();
+			try {
+				ContentValues values = new ContentValues();
+				for (String filterStr : selectedFilters) {
+
+					values.put(COL_TITLE, filterStr);
+					Log.i("kk","Inserted filter with Title::"+filterStr);
+					db.insert(FILTER_TABLE, null, values);
+
+				}
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+			}
+		}
+
+
+	}
+
+	public void emptyTable(String tableName)
+	{
+		try {
+			SQLiteDatabase db=getDb();
+			db.delete(FILTER_TABLE,null,null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+	public List<OfferModel> getFilterOffers()
+	{
+		return getOffersByCategories(getFilter());
+	}
+
+	public List<String> getFilter()
+	{
+		List<String> selectedFilters=null;
+		Cursor cursor=null;
+		try {
+			SQLiteDatabase db = getDb();
+			String query="Select * from "+FILTER_TABLE;
+			cursor =db.rawQuery(query,null);
+			if (cursor.getCount() > 0)
+			{
+				selectedFilters= new ArrayList<>();
+				cursor.moveToFirst();
+				do {
+					selectedFilters.add(cursor.getString(cursor.getColumnIndex(COL_TITLE)));
+				} while (cursor.moveToNext());
+			}
+		}
+		catch (Exception e)
+		{
+
+		}
+		finally {
+			if (cursor!=null)
+			{
+				cursor.close();
+				cursor=null;
+			}
+		}
+
+		return selectedFilters;
+	}
+
 	public List<OfferModel> getOffersByCategories(List<String> categories)
 	{
 		List<OfferModel> offers=null;
 		Cursor cursor=null;
 		try {
 			SQLiteDatabase db=getDb();
-			String query="Select * from "+OFFERS_TABLE+"where"+(makeLikeQuery(COL_CATEGORY,categories));
+			String query="Select * from "+OFFERS_TABLE+" where"+(makeLikeQuery(COL_CATEGORY,categories));
 			Log.d("kk", "getOffersByCategories: Query::"+query);
 			cursor =db.rawQuery(query,null);
 			if (cursor.getCount() > 0)
@@ -140,7 +221,7 @@ public class DBHelper extends SQLiteOpenHelper {
       String result="";
 		for (int i = 0; i < values.size(); i++) {
 			if(i!=(values.size()-1)) {
-				result = result + " " + coloumn + " like '%" + values.get(i) + "%' and";
+				result = result + " " + coloumn + " like '%" + values.get(i) + "%' OR";
 			}
 			else
 				result = result + " " + coloumn + " like '%" + values.get(i) + "%'";
@@ -150,6 +231,12 @@ public class DBHelper extends SQLiteOpenHelper {
 		return result;
 	}
 
+	public long getRowCount(String tableName) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		long cnt  = DatabaseUtils.queryNumEntries(db, tableName);
+		return cnt;
+	}
+
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
@@ -157,6 +244,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		 * db.execSQL("DROP TABLE IF EXISTS contacts"); onCreate(db);
 		 */
 	}
+
+
 
 
 

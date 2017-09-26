@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
+
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         frameContainer=(FrameLayout)findViewById(R.id.frameContainer);
@@ -131,31 +132,6 @@ public class MainActivity extends BaseActivity {
             AppDataHandler.getInstance().setAppData(responseModel);
             AppDataHandler.getInstance().saveOffers();
             setView();
-           /* List<ChildFragmentModel> fragments = new ArrayList<>();
-            for (int i = 0; i < responseModel.getOffers().size(); i++) {
-
-                OfferModel offer = responseModel.getOffers().get(i);
-                ChildFragmentModel model = new ChildFragmentModel();
-                PageBaseFragment fragment = new OfferFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString(getString(R.string.key_img_url), offer.getImgUrl());
-                bundle.putString(getString(R.string.key_descp), offer.getDesc());
-
-                bundle.putString(getString(R.string.key_title), offer.getTitle());
-                bundle.putString(getString(R.string.key_redrct), offer.getRedirect());
-                fragment.setArguments(bundle);
-                model.fragment = fragment;
-                model.id = i;
-                model.title = offer.getTitle();
-                fragments.add(model);
-            }
-
-
-            adapter = new ViewPagerAdapter(getSupportFragmentManager());
-            adapter.setList(fragments);
-            viewPager.setAdapter(adapter);*/
-
-
         }
 
     }
@@ -225,26 +201,37 @@ public class MainActivity extends BaseActivity {
     {
         if(prefHandler.getBoolean(KEY_IS_LISTVIEW))
         {
+            List<OfferModel> offerModels= AppDataHandler.getInstance().getOffers();
+
+            if (Utils.isValid(offerModels)) {
                 if(fragmentListview==null)
                 {
                     fragmentListview= new ListViewFragment();
-                    fragmentListview.setOfferModels(AppDataHandler.getInstance().getOffers());
+                    fragmentListview.setOfferModels(offerModels);
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction =
                             fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frameContainer, fragmentListview);
                     fragmentTransaction.commit();
                 }
-            viewPager.setVisibility(View.GONE);
-            frameContainer.setVisibility(View.VISIBLE);
+                else
+                {
+                    fragmentListview.refereshWithNewData(offerModels);
+                }
+                viewPager.setVisibility(View.GONE);
+                frameContainer.setVisibility(View.VISIBLE);
+            }
         }
         else
         {
-            if(adapter==null) {
-                List<ChildFragmentModel> fragments = new ArrayList<>();
-                for (int i = 0; i < AppDataHandler.getInstance().getOffers().size(); i++) {
 
-                    OfferModel offer = AppDataHandler.getInstance().getOffers().get(i);
+            List<OfferModel> offerModels= AppDataHandler.getInstance().getOffers();
+
+            if (Utils.isValid(offerModels)) {
+                List<ChildFragmentModel> fragments = new ArrayList<>();
+                for (int i = 0; i < offerModels.size(); i++) {
+
+                    OfferModel offer = offerModels.get(i);
                     ChildFragmentModel model = new ChildFragmentModel();
                     PageBaseFragment fragment = new OfferFragment();
                     Bundle bundle = new Bundle();
@@ -258,14 +245,21 @@ public class MainActivity extends BaseActivity {
                     model.id = i;
                     model.title = offer.getTitle();
                     fragments.add(model);
-                }
 
-                adapter = new ViewPagerAdapter(getSupportFragmentManager());
-                adapter.setList(fragments);
-                viewPager.setAdapter(adapter);
+                if (adapter==null) {
+                    adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                    adapter.setList(fragments);
+                    viewPager.setAdapter(adapter);
+                }
+                else
+                {
+                    adapter.setList(fragments);
+                    adapter.notifyDataSetChanged();
+                }
             }
-            viewPager.setVisibility(View.VISIBLE);
-            frameContainer.setVisibility(View.GONE);
+                viewPager.setVisibility(View.VISIBLE);
+                frameContainer.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -463,11 +457,8 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            List<OfferModel> filterOffers= new ArrayList<>();
-            if(Utils.isValid(filterOffers))
-            {
-                //Todo handle  via global key in prefs
-            }
+
+            setView();
         }
     }
 

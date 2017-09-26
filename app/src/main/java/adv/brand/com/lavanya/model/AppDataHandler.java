@@ -67,8 +67,15 @@ public class AppDataHandler {
 
     public List<OfferModel> getOffers()
     {
-        if(model!=null)
+        if(model!=null) {
+            DBHelper db=DBHelper.getInstance(BrandApp.getInstance());
+            if(db.getRowCount(DBHelper.FILTER_TABLE)>0)
+            {
+                return db.getFilterOffers();
+            }
+            else
             return model.getOffers();
+        }
         return null;
     }
 
@@ -103,5 +110,15 @@ public class AppDataHandler {
 
     public void setFilteredOffers(List<OfferModel> filteredOffers) {
         this.filteredOffers = filteredOffers;
+    }
+
+    public void setSelectedFilter(List<String> selectedFilers)
+    {
+        DBHelper.getInstance(BrandApp.getInstance()).insertFilters(selectedFilers);
+    }
+
+    public void removeFilter()
+    {
+        DBHelper.getInstance(BrandApp.getInstance()).emptyTable(DBHelper.FILTER_TABLE);
     }
 }

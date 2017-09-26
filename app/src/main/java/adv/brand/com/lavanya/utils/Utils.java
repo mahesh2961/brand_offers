@@ -12,6 +12,8 @@ import java.util.List;
 
 public class Utils {
 
+    public static  String KEY_IS_FILTER_APPLYIED="isFilter";
+
     public static boolean isValid(List list)
     {
         return list!=null && list.size()>0;

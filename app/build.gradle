@@ -38,6 +38,7 @@ dependencies {
     compile 'com.github.demoNo:AutoScrollViewPager:v1.0.2'
     compile 'com.android.support:recyclerview-v7:25.3.1'
 
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
 
     testCompile 'junit:junit:4.12'
 

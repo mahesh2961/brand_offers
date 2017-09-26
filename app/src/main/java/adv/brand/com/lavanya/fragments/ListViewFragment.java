@@ -64,4 +64,11 @@ public class ListViewFragment extends PageBaseFragment implements OnItemClickLis
         AppDataHandler.getInstance().setCurrentOffer(model);
         startActivity(intent);
     }
+
+    public void refereshWithNewData(List<OfferModel> offerModels)
+    {
+        this.offerModels=offerModels;
+        adapter.setList(this.offerModels);
+        adapter.notifyDataSetChanged();
+    }
 }

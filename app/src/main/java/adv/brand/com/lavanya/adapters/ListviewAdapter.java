@@ -45,6 +45,11 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ViewHo
         return new ViewHolder(itemView);
     }
 
+    public void setList(List<OfferModel> offerModels)
+    {
+        this.offerModels=offerModels;
+    }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
