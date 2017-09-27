@@ -1,6 +1,8 @@
 package adv.brand.com.lavanya.adapters;
 
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,8 +56,21 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final OfferModel model=offerModels.get(position);
-        holder.txtTitle.setText(model.getTitle());
-        holder.txtDescp.setText(model.getDesc());
+        /*holder.txtTitle.setText(model.getTitle());
+        holder.txtDescp.setText(model.getDesc());*/
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
+
+            holder.txtTitle.setText(Html.fromHtml(model.getTitle(), Html.FROM_HTML_MODE_COMPACT));
+            holder.txtDescp.setText(Html.fromHtml(model.getDesc(), Html.FROM_HTML_MODE_COMPACT));
+        }
+        else {
+
+            holder.txtTitle.setText(Html.fromHtml(model.getTitle()));
+            holder.txtDescp.setText(Html.fromHtml(model.getDesc()));
+
+        }
 
         String offerUrl=model.getImgUrl();
         if(!TextUtils.isEmpty(offerUrl)) {

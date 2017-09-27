@@ -8,8 +8,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,8 +91,21 @@ public class OfferFragment extends PageBaseFragment {
         txtTitle=(CustomFontTextView)view.findViewById(R.id.offerTitle);
         txtdesc=(CustomFontTextView)view.findViewById(R.id.offerDescription);
 
-        txtTitle.setText(title);
-        txtdesc.setText(desc);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
+
+            txtTitle.setText(Html.fromHtml(title, Html.FROM_HTML_MODE_COMPACT));
+            txtdesc.setText(Html.fromHtml(desc, Html.FROM_HTML_MODE_COMPACT));
+        }
+        else {
+
+            txtTitle.setText(Html.fromHtml(title));
+            txtdesc.setText(Html.fromHtml(desc));
+
+        }
+
+
 
         brandImg.setOnClickListener(new View.OnClickListener() {
             @Override
