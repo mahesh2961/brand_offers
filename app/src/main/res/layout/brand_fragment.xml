@@ -39,8 +39,16 @@
            android:layout_marginBottom="16dp"
            android:layout_width="@dimen/image_width"
            android:layout_height="@dimen/image_height" />-->
+       <ImageView
+           android:id="@+id/imgSendMsg"
+           android:layout_above="@+id/llContainer"
+           android:src="@drawable/ic_connect"
+           android:layout_alignParentLeft="true"
+           android:layout_width="32dp"
+           android:layout_height="32dp" />
 
        <LinearLayout
+           android:id="@+id/llContainer"
            android:paddingTop="10dp"
            android:layout_marginBottom="16dp"
            android:background="@color/white"

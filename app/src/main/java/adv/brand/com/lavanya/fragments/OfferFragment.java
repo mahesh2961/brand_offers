@@ -1,6 +1,8 @@
 package adv.brand.com.lavanya.fragments;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,7 +14,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -30,6 +35,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import adv.brand.com.lavanya.BrandApp;
+import adv.brand.com.lavanya.MainActivity;
 import adv.brand.com.lavanya.R;
 import adv.brand.com.lavanya.WebviewActivity;
 import adv.brand.com.lavanya.customUI.CustomFontTextView;
@@ -126,27 +132,16 @@ public class OfferFragment extends PageBaseFragment {
             public void onClick(View view) {
                 try {
 
-                    if(isBitmapAvailable)
-                    {
-                        Intent shareIntent = new Intent();
-                        shareIntent.setAction(Intent.ACTION_SEND);
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, title+"\n"+desc+"\n Download App from (google play link)");
-                        String url= MediaStore.Images.Media.insertImage(getContext().getContentResolver(), downloadedBitmap, "myfile", "new image");
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
-                        shareIntent.setType("image/jpeg");
-                        startActivity(Intent.createChooser(shareIntent, "Share"));
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
                     }
                     else
                     {
-                        Utils.showToastShort(getActivity(),"Image is not yet downloaded, you can wait or share message");
-                        Intent shareIntent = new Intent();
-                        shareIntent.setAction(Intent.ACTION_SEND);
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, Utils.formHtml(title)+"\n"+Utils.formHtml(desc)+"\n Download App from (google play link)");
-                        /*String url= MediaStore.Images.Media.insertImage(getContext().getContentResolver(), downloadedBitmap, "myfile", "new image");
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));*/
-                        shareIntent.setType("text/plain");
-                        startActivity(Intent.createChooser(shareIntent, "Share"));
+                        startShareIntent();
                     }
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -158,6 +153,30 @@ public class OfferFragment extends PageBaseFragment {
 
 
 
+    }
+    public void startShareIntent() throws Exception
+    {
+        if(isBitmapAvailable)
+        {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, Utils.formHtml(title)+"\n"+Utils.formHtml(desc)+"\n Download App from (google play link)");
+            String url= MediaStore.Images.Media.insertImage(getContext().getContentResolver(), downloadedBitmap, "myfile", "new image");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
+            shareIntent.setType("image/jpeg");
+            startActivity(Intent.createChooser(shareIntent, "Share"));
+        }
+        else
+        {
+            Utils.showToastShort(getActivity(),"Image is not yet downloaded, you can wait or share message");
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, Utils.formHtml(title)+"\n"+Utils.formHtml(desc)+"\n Download App from (google play link)");
+                        /*String url= MediaStore.Images.Media.insertImage(getContext().getContentResolver(), downloadedBitmap, "myfile", "new image");
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));*/
+            shareIntent.setType("text/plain");
+            startActivity(Intent.createChooser(shareIntent, "Share"));
+        }
     }
 
     public  ImageLoader.ImageListener getImageListener(final ImageView view,
@@ -181,6 +200,32 @@ public class OfferFragment extends PageBaseFragment {
                 }
             }
         };
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 2: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    try {
+                        startShareIntent();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getContext(), "Permission denied,can not share", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
     }
 
 
