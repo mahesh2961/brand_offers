@@ -108,8 +108,11 @@ public class OfferFragment extends PageBaseFragment {
 
 
         brandImg.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+
+
                 OfferModel offerModel= new OfferModel();
                 offerModel.setTitle(title);
                 offerModel.setDesc(desc);
