@@ -1,6 +1,10 @@
 package adv.brand.com.lavanya.utils;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -33,5 +37,19 @@ public class Utils {
     public static void showToastShort(Context context, String message)
     {
         Toast.makeText(context, "tag", Toast.LENGTH_SHORT).show();
+    }
+
+    public static Spanned formHtml(String str)
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
+
+            return Html.fromHtml(str, Html.FROM_HTML_MODE_COMPACT);
+        }
+        else {
+
+            return (Html.fromHtml(str));
+
+        }
     }
 }

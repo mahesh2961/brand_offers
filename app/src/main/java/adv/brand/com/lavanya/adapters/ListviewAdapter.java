@@ -4,6 +4,7 @@ import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,10 +77,13 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ViewHo
         if(!TextUtils.isEmpty(offerUrl)) {
             mImageLoader.get(offerUrl, ImageLoader.getImageListener(holder.imageView, R.drawable.home_stub, android.R.drawable.ic_dialog_alert));
             holder.imageView.setImageUrl(offerUrl, mImageLoader);
+            Log.i("kk", "onBindViewHolder: image not emptyR");
+
         }
         else
         {
             //Todo set default  image
+            Log.i("kk", "onBindViewHolder: image empty");
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

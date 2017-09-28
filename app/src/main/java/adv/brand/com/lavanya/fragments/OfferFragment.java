@@ -8,8 +8,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -35,6 +37,7 @@ import adv.brand.com.lavanya.customUI.CustomImageView;
 import adv.brand.com.lavanya.model.AppDataHandler;
 import adv.brand.com.lavanya.model.OfferModel;
 import adv.brand.com.lavanya.utils.CustomVolleyRequestQueue;
+import adv.brand.com.lavanya.utils.Utils;
 
 /**
  * Created by maheshb on 22/9/17.
@@ -52,6 +55,10 @@ public class OfferFragment extends PageBaseFragment {
     CustomFontTextView txtTitle,txtdesc;
 
     private ImageLoader mImageLoader;
+    Bitmap downloadedBitmap;
+    ImageView imgShare;
+
+    private boolean isBitmapAvailable=false;
 
     DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
@@ -76,6 +83,7 @@ public class OfferFragment extends PageBaseFragment {
 
     public void initializeView(View view)
     {
+        isBitmapAvailable=false;
         if(TextUtils.isEmpty(imageUrl)) {
             imageUrl=getArguments().getString(BrandApp.getInstance().getString(R.string.key_img_url),"");
             redirectUrl=getArguments().getString(BrandApp.getInstance().getString(R.string.key_redrct),"");
@@ -84,26 +92,16 @@ public class OfferFragment extends PageBaseFragment {
 
         }
 
+        imgShare=(ImageView)view.findViewById(R.id.share);
 /*
         imageUrl="https://www.dropbox.com/s/9pzumm4d8yipbz3/1001.jpg?dl=1";
 */
         brandImg=(CustomImageView)view.findViewById(R.id.offerImage);
         txtTitle=(CustomFontTextView)view.findViewById(R.id.offerTitle);
         txtdesc=(CustomFontTextView)view.findViewById(R.id.offerDescription);
+        txtTitle.setText(Utils.formHtml(title));
+        txtdesc.setText(Utils.formHtml(desc));
 
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        {
-
-            txtTitle.setText(Html.fromHtml(title, Html.FROM_HTML_MODE_COMPACT));
-            txtdesc.setText(Html.fromHtml(desc, Html.FROM_HTML_MODE_COMPACT));
-        }
-        else {
-
-            txtTitle.setText(Html.fromHtml(title));
-            txtdesc.setText(Html.fromHtml(desc));
-
-        }
 
 
 
@@ -119,12 +117,70 @@ public class OfferFragment extends PageBaseFragment {
                 Intent intent= new Intent(getContext(), WebviewActivity.class);
                 startActivity(intent);
 
+
             }
         });
 
-       mImageLoader.get(imageUrl, ImageLoader.getImageListener(brandImg, R.drawable.home_stub, android.R.drawable.ic_dialog_alert));
+        imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+
+                    if(isBitmapAvailable)
+                    {
+                        Intent shareIntent = new Intent();
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, title+"\n"+desc+"\n Download App from (google play link)");
+                        String url= MediaStore.Images.Media.insertImage(getContext().getContentResolver(), downloadedBitmap, "myfile", "new image");
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
+                        shareIntent.setType("image/jpeg");
+                        startActivity(Intent.createChooser(shareIntent, "Share"));
+                    }
+                    else
+                    {
+                        Utils.showToastShort(getActivity(),"Image is not yet downloaded, you can wait or share message");
+                        Intent shareIntent = new Intent();
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, Utils.formHtml(title)+"\n"+Utils.formHtml(desc)+"\n Download App from (google play link)");
+                        /*String url= MediaStore.Images.Media.insertImage(getContext().getContentResolver(), downloadedBitmap, "myfile", "new image");
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));*/
+                        shareIntent.setType("text/plain");
+                        startActivity(Intent.createChooser(shareIntent, "Share"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+       mImageLoader.get(imageUrl, getImageListener(brandImg, R.drawable.home_stub, android.R.drawable.ic_dialog_alert));
        brandImg.setImageUrl(imageUrl, mImageLoader);
 
+
+
+    }
+
+    public  ImageLoader.ImageListener getImageListener(final ImageView view,
+                                                             final int defaultImageResId, final int errorImageResId) {
+        return new ImageLoader.ImageListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (errorImageResId != 0) {
+                    view.setImageResource(errorImageResId);
+                }
+            }
+
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                if (response.getBitmap() != null) {
+                    view.setImageBitmap(response.getBitmap());
+                    downloadedBitmap=response.getBitmap();
+                    isBitmapAvailable=true;
+                } else if (defaultImageResId != 0) {
+                    view.setImageResource(defaultImageResId);
+                }
+            }
+        };
     }
 
 

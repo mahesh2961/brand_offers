@@ -20,6 +20,16 @@
            android:layout_centerHorizontal="true"
            android:layout_width="match_parent"
            android:layout_height="@dimen/image_height" />
+       <ImageView
+           android:id="@+id/share"
+           android:background="@color/sub_cat_black"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="5dp"
+           android:layout_marginTop="5dp"
+           android:layout_alignParentTop="true"
+           android:layout_width="32dp"
+           android:src="@drawable/ic_share"
+           android:layout_height="32dp" />
 
        <!--<ImageView
            android:id="@+id/offerImage"
